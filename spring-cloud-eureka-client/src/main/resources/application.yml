@@ -1,0 +1,27 @@
+server:
+  # 服务注册客户端口号
+  port: 1001
+spring:
+  application:
+    name: eureka-client
+eureka:
+  instance:
+    # 客户端的主机名
+    hostname: localhost
+    # 实例名称
+    instance-id: ${spring.application.name}:${eureka.instance.hostname}:${server.port}
+    # 续约时间 需要小于服务器的定期删除的时间
+    lease-renewal-interval-in-seconds: 5
+    # 以ip的形式显示服务信息
+    prefer-ip-address: true
+  client:
+    # 是否向服务注册中心注册自己
+    register-with-eureka: true
+    # 是否检索服务并拉取服务列表到本地缓存
+    fetch-registry: true
+    #服务注册中心的配置内容，指定服务注册中心的位置
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:1000/eureka/
+
+    # 从注册中心拉取列表的时间间隔，时间越短 数据越及时
+    registry-fetch-interval-seconds: 10
